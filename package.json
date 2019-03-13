@@ -1,0 +1,21 @@
+{
+  "name": "whatnow-api",
+  "version": "1.2.0",
+  "description": "An API for keeping track of your SPOTs, Users and events  ",
+  "main": "index.js",
+  "scripts": {
+    "prestart": "npm install",
+    "start": "node index.js"
+  },
+  "keywords": [
+    "swagger"
+  ],
+  "license": "Apache-2.0",
+  "private": true,
+  "dependencies": {
+    "connect": "^3.2.0",
+    "js-yaml": "^3.3.0",
+    "mysql": "^2.16.0",
+    "swagger-tools": "^0.10.4"
+  }
+}

@@ -1,0 +1,1004 @@
+{
+  "swagger" : "2.0",
+  "info" : {
+    "description" : "An API for keeping track of your SPOTs, Users and events\n\n",
+    "version" : "1.2.0",
+    "title" : "whatnow API",
+    "contact" : { }
+  },
+  "host" : "whatnowapi.restlet.net",
+  "basePath" : "/v1",
+  "tags" : [ {
+    "name" : "General"
+  }, {
+    "name" : "Event"
+  }, {
+    "name" : "SPOT"
+  }, {
+    "name" : "User"
+  }, {
+    "name" : "EventType"
+  }, {
+    "name" : "SPOTType"
+  }, {
+    "name" : "LogType"
+  }, {
+    "name" : "LogUser"
+  }, {
+    "name" : "EventUser"
+  } ],
+  "schemes" : [ "https" ],
+  "paths" : {
+    "/event" : {
+      "get" : {
+        "tags" : [ "Event" ],
+        "summary" : "GetEvent",
+        "operationId" : "getEvent",
+        "produces" : [ "application/json" ],
+        "parameters" : [ {
+          "name" : "EventId",
+          "in" : "query",
+          "required" : true,
+          "type" : "integer",
+          "format" : "int64"
+        } ],
+        "responses" : {
+          "200" : {
+            "description" : "Status 200",
+            "schema" : {
+              "$ref" : "#/definitions/Event"
+            }
+          }
+        }
+      }
+    },
+    "/event/create" : {
+      "post" : {
+        "tags" : [ "Event" ],
+        "summary" : "CreateEvent",
+        "operationId" : "postEventCreate",
+        "parameters" : [ {
+          "name" : "Event",
+          "in" : "query",
+          "required" : true,
+          "type" : "string"
+        } ],
+        "responses" : {
+          "200" : {
+            "description" : "Status 200"
+          }
+        }
+      }
+    },
+    "/event/delete" : {
+      "post" : {
+        "tags" : [ "Event" ],
+        "summary" : "DeleteEvent",
+        "operationId" : "postEventDelete",
+        "parameters" : [ {
+          "name" : "EventId",
+          "in" : "query",
+          "required" : true,
+          "type" : "integer",
+          "format" : "int64"
+        } ],
+        "responses" : {
+          "200" : {
+            "description" : "Status 200"
+          }
+        }
+      }
+    },
+    "/event/edit" : {
+      "post" : {
+        "tags" : [ "Event" ],
+        "summary" : "EditEvent",
+        "operationId" : "postEventEdit",
+        "parameters" : [ {
+          "name" : "Event",
+          "in" : "query",
+          "required" : true,
+          "type" : "string"
+        } ],
+        "responses" : {
+          "200" : {
+            "description" : "Status 200"
+          }
+        }
+      }
+    },
+    "/event/list" : {
+      "get" : {
+        "tags" : [ "Event" ],
+        "summary" : "ListEvent",
+        "operationId" : "getEventList",
+        "produces" : [ "application/json" ],
+        "parameters" : [ ],
+        "responses" : {
+          "200" : {
+            "description" : "Status 200",
+            "schema" : {
+              "type" : "array",
+              "items" : {
+                "$ref" : "#/definitions/Event"
+              }
+            }
+          }
+        }
+      }
+    },
+    "/eventtype" : {
+      "get" : {
+        "tags" : [ "EventType" ],
+        "summary" : "GetEventType",
+        "operationId" : "getEventtype",
+        "produces" : [ "application/json" ],
+        "parameters" : [ {
+          "name" : "EventTypeId",
+          "in" : "query",
+          "required" : true,
+          "type" : "integer",
+          "format" : "int64"
+        } ],
+        "responses" : {
+          "200" : {
+            "description" : "Status 200",
+            "schema" : {
+              "$ref" : "#/definitions/Event_Type"
+            }
+          }
+        }
+      }
+    },
+    "/eventtype/create" : {
+      "post" : {
+        "tags" : [ "EventType" ],
+        "summary" : "CreateEventType",
+        "operationId" : "postEventtypeCreate",
+        "parameters" : [ {
+          "name" : "EventType",
+          "in" : "query",
+          "required" : true,
+          "type" : "string"
+        } ],
+        "responses" : {
+          "200" : {
+            "description" : "Status 200"
+          }
+        }
+      }
+    },
+    "/eventtype/delete" : {
+      "post" : {
+        "tags" : [ "EventType" ],
+        "summary" : "DeleteEventType",
+        "operationId" : "postEventtypeDelete",
+        "parameters" : [ {
+          "name" : "EventTypeId",
+          "in" : "query",
+          "required" : true,
+          "type" : "integer",
+          "format" : "int64"
+        } ],
+        "responses" : {
+          "200" : {
+            "description" : "Status 200"
+          }
+        }
+      }
+    },
+    "/eventtype/edit" : {
+      "post" : {
+        "tags" : [ "EventType" ],
+        "summary" : "EditEventType",
+        "operationId" : "postEventtypeEdit",
+        "parameters" : [ {
+          "name" : "EventType",
+          "in" : "query",
+          "required" : true,
+          "type" : "string"
+        } ],
+        "responses" : {
+          "200" : {
+            "description" : "Status 200"
+          }
+        }
+      }
+    },
+    "/eventtype/list" : {
+      "get" : {
+        "tags" : [ "EventType" ],
+        "summary" : "ListEventType",
+        "operationId" : "getEventtypeList",
+        "produces" : [ "application/json" ],
+        "parameters" : [ ],
+        "responses" : {
+          "200" : {
+            "description" : "Status 200",
+            "schema" : {
+              "type" : "array",
+              "items" : {
+                "$ref" : "#/definitions/Event_Type"
+              }
+            }
+          }
+        }
+      }
+    },
+    "/eventuser/event" : {
+      "get" : {
+        "tags" : [ "EventUser" ],
+        "summary" : "ListEventUserEvent",
+        "operationId" : "getEventuserEvent",
+        "produces" : [ "application/json" ],
+        "parameters" : [ {
+          "name" : "eventId",
+          "in" : "query",
+          "required" : true,
+          "type" : "integer",
+          "format" : "int64"
+        }, {
+          "name" : "startDate",
+          "in" : "query",
+          "required" : false,
+          "type" : "string",
+          "format" : "date-time"
+        }, {
+          "name" : "endDate",
+          "in" : "query",
+          "required" : false,
+          "type" : "string",
+          "format" : "date-time"
+        } ],
+        "responses" : {
+          "200" : {
+            "description" : "Status 200",
+            "schema" : {
+              "type" : "array",
+              "items" : {
+                "$ref" : "#/definitions/Event_User"
+              }
+            }
+          }
+        }
+      }
+    },
+    "/eventuser/list" : {
+      "get" : {
+        "tags" : [ "EventUser" ],
+        "summary" : "ListEventUserTotal",
+        "operationId" : "getEventuserList",
+        "produces" : [ "application/json" ],
+        "parameters" : [ ],
+        "responses" : {
+          "200" : {
+            "description" : "Status 200",
+            "schema" : {
+              "type" : "array",
+              "items" : {
+                "$ref" : "#/definitions/Event_User"
+              }
+            }
+          }
+        }
+      }
+    },
+    "/eventuser/user" : {
+      "get" : {
+        "tags" : [ "EventUser" ],
+        "summary" : "ListEventUser",
+        "operationId" : "getEventuserUser",
+        "produces" : [ "application/json" ],
+        "parameters" : [ {
+          "name" : "userId",
+          "in" : "query",
+          "required" : true,
+          "type" : "integer",
+          "format" : "int64"
+        }, {
+          "name" : "startDate",
+          "in" : "query",
+          "required" : false,
+          "type" : "string",
+          "format" : "date-time"
+        }, {
+          "name" : "endDate",
+          "in" : "query",
+          "required" : false,
+          "type" : "string",
+          "format" : "date-time"
+        } ],
+        "responses" : {
+          "200" : {
+            "description" : "Status 200",
+            "schema" : {
+              "type" : "array",
+              "items" : {
+                "$ref" : "#/definitions/Event_User"
+              }
+            }
+          }
+        }
+      }
+    },
+    "/logtype/create" : {
+      "post" : {
+        "tags" : [ "LogType" ],
+        "summary" : "CreateLogType",
+        "operationId" : "postLogtypeCreate",
+        "parameters" : [ {
+          "name" : "logType",
+          "in" : "query",
+          "required" : true,
+          "type" : "string"
+        } ],
+        "responses" : {
+          "200" : {
+            "description" : "Status 200"
+          }
+        }
+      }
+    },
+    "/logtype/delete" : {
+      "post" : {
+        "tags" : [ "LogType" ],
+        "summary" : "DeleteLogType",
+        "operationId" : "postLogtypeDelete",
+        "parameters" : [ {
+          "name" : "logTypeId",
+          "in" : "query",
+          "required" : true,
+          "type" : "integer",
+          "format" : "int64"
+        } ],
+        "responses" : {
+          "200" : {
+            "description" : "Status 200"
+          }
+        }
+      }
+    },
+    "/logtype/edit" : {
+      "post" : {
+        "tags" : [ "LogType" ],
+        "summary" : "EditLogType",
+        "operationId" : "postLogtypeEdit",
+        "parameters" : [ {
+          "name" : "logType",
+          "in" : "query",
+          "required" : true,
+          "type" : "string"
+        } ],
+        "responses" : {
+          "200" : {
+            "description" : "Status 200"
+          }
+        }
+      }
+    },
+    "/logtype/list" : {
+      "get" : {
+        "tags" : [ "LogType" ],
+        "summary" : "ListLogType",
+        "operationId" : "getLogtypeList",
+        "produces" : [ "application/json" ],
+        "parameters" : [ ],
+        "responses" : {
+          "200" : {
+            "description" : "Status 200",
+            "schema" : {
+              "type" : "array",
+              "items" : {
+                "$ref" : "#/definitions/Log_Type"
+              }
+            }
+          }
+        }
+      }
+    },
+    "/loguser" : {
+      "get" : {
+        "tags" : [ "LogUser" ],
+        "summary" : "ListLogUser",
+        "operationId" : "getLoguser",
+        "produces" : [ "application/json" ],
+        "parameters" : [ {
+          "name" : "userId",
+          "in" : "query",
+          "required" : true,
+          "type" : "integer",
+          "format" : "int64"
+        }, {
+          "name" : "startDate",
+          "in" : "query",
+          "required" : false,
+          "type" : "string",
+          "format" : "date-time"
+        }, {
+          "name" : "endDate",
+          "in" : "query",
+          "required" : false,
+          "type" : "string",
+          "format" : "date-time"
+        } ],
+        "responses" : {
+          "200" : {
+            "description" : "Status 200",
+            "schema" : {
+              "type" : "array",
+              "items" : {
+                "$ref" : "#/definitions/Log_User"
+              }
+            }
+          }
+        }
+      }
+    },
+    "/logyype" : {
+      "get" : {
+        "tags" : [ "LogType" ],
+        "summary" : "GetLogType",
+        "operationId" : "getLogyype",
+        "produces" : [ "application/json" ],
+        "parameters" : [ {
+          "name" : "logTypeId",
+          "in" : "query",
+          "required" : true,
+          "type" : "integer",
+          "format" : "int64"
+        } ],
+        "responses" : {
+          "200" : {
+            "description" : "Status 200",
+            "schema" : {
+              "$ref" : "#/definitions/Log_Type"
+            }
+          }
+        }
+      }
+    },
+    "/spot" : {
+      "get" : {
+        "tags" : [ "SPOT" ],
+        "summary" : "GetSPOT",
+        "operationId" : "getSpot",
+        "produces" : [ "application/json" ],
+        "parameters" : [ {
+          "name" : "SpotId",
+          "in" : "query",
+          "required" : true,
+          "type" : "integer",
+          "format" : "int64"
+        } ],
+        "responses" : {
+          "200" : {
+            "description" : "Status 200",
+            "schema" : {
+              "$ref" : "#/definitions/SPOT"
+            }
+          }
+        }
+      }
+    },
+    "/spot/create" : {
+      "post" : {
+        "tags" : [ "SPOT" ],
+        "summary" : "CreateSPOT",
+        "operationId" : "postSpotCreate",
+        "parameters" : [ {
+          "name" : "SPOT",
+          "in" : "query",
+          "required" : true,
+          "type" : "string"
+        } ],
+        "responses" : {
+          "200" : {
+            "description" : "Status 200"
+          }
+        }
+      }
+    },
+    "/spot/delete" : {
+      "post" : {
+        "tags" : [ "SPOT" ],
+        "summary" : "DeleteSPOT",
+        "operationId" : "postSpotDelete",
+        "parameters" : [ {
+          "name" : "spotId",
+          "in" : "query",
+          "required" : true,
+          "type" : "integer",
+          "format" : "int64"
+        } ],
+        "responses" : {
+          "200" : {
+            "description" : "Status 200"
+          }
+        }
+      }
+    },
+    "/spot/edit" : {
+      "post" : {
+        "tags" : [ "SPOT" ],
+        "summary" : "EditSPOT",
+        "operationId" : "postSpotEdit",
+        "parameters" : [ {
+          "name" : "spot",
+          "in" : "query",
+          "required" : false,
+          "type" : "string"
+        } ],
+        "responses" : {
+          "200" : {
+            "description" : "Status 200"
+          }
+        }
+      }
+    },
+    "/spot/list" : {
+      "get" : {
+        "tags" : [ "SPOT" ],
+        "summary" : "ListSPOT",
+        "operationId" : "getSpotList",
+        "produces" : [ "application/json" ],
+        "parameters" : [ ],
+        "responses" : {
+          "200" : {
+            "description" : "Status 200",
+            "schema" : {
+              "type" : "array",
+              "items" : {
+                "$ref" : "#/definitions/SPOT"
+              }
+            }
+          }
+        }
+      }
+    },
+    "/spottype" : {
+      "get" : {
+        "tags" : [ "SPOTType" ],
+        "summary" : "GetSPOTType",
+        "operationId" : "getSpottype",
+        "produces" : [ "application/json" ],
+        "parameters" : [ {
+          "name" : "spotTypeId",
+          "in" : "query",
+          "required" : true,
+          "type" : "integer",
+          "format" : "int64"
+        } ],
+        "responses" : {
+          "200" : {
+            "description" : "Status 200",
+            "schema" : {
+              "$ref" : "#/definitions/SPOT_Type"
+            }
+          }
+        }
+      }
+    },
+    "/spottype/create" : {
+      "post" : {
+        "tags" : [ "SPOTType" ],
+        "summary" : "CreateSPOTType",
+        "operationId" : "postSpottypeCreate",
+        "parameters" : [ {
+          "name" : "spotType",
+          "in" : "query",
+          "required" : true,
+          "type" : "string"
+        } ],
+        "responses" : {
+          "200" : {
+            "description" : "Status 200"
+          }
+        }
+      }
+    },
+    "/spottype/delete" : {
+      "post" : {
+        "tags" : [ "SPOTType" ],
+        "summary" : "DeleteSPOTType",
+        "operationId" : "postSpottypeDelete",
+        "parameters" : [ {
+          "name" : "spotTypeId",
+          "in" : "query",
+          "required" : true,
+          "type" : "integer",
+          "format" : "int64"
+        } ],
+        "responses" : {
+          "200" : {
+            "description" : "Status 200"
+          }
+        }
+      }
+    },
+    "/spottype/edit" : {
+      "post" : {
+        "tags" : [ "SPOTType" ],
+        "summary" : "EditSPOTType",
+        "operationId" : "postSpottypeEdit",
+        "parameters" : [ {
+          "name" : "spotType",
+          "in" : "query",
+          "required" : true,
+          "type" : "string"
+        } ],
+        "responses" : {
+          "200" : {
+            "description" : "Status 200"
+          }
+        }
+      }
+    },
+    "/spottype/list" : {
+      "get" : {
+        "tags" : [ "SPOTType" ],
+        "summary" : "ListSPOTType",
+        "operationId" : "getSpottypeList",
+        "produces" : [ "application/json" ],
+        "parameters" : [ ],
+        "responses" : {
+          "200" : {
+            "description" : "Status 200",
+            "schema" : {
+              "type" : "array",
+              "items" : {
+                "$ref" : "#/definitions/SPOT_Type"
+              }
+            }
+          }
+        }
+      }
+    },
+    "/user" : {
+      "get" : {
+        "tags" : [ "User" ],
+        "summary" : "GetUser",
+        "operationId" : "getUser",
+        "produces" : [ "application/json" ],
+        "parameters" : [ {
+          "name" : "userId",
+          "in" : "query",
+          "required" : true,
+          "type" : "integer",
+          "format" : "int64"
+        } ],
+        "responses" : {
+          "200" : {
+            "description" : "Status 200",
+            "schema" : {
+              "$ref" : "#/definitions/User"
+            }
+          }
+        }
+      }
+    },
+    "/user/create" : {
+      "post" : {
+        "tags" : [ "User" ],
+        "summary" : "CreateUser",
+        "operationId" : "postUserCreate",
+        "parameters" : [ {
+          "name" : "user",
+          "in" : "query",
+          "required" : true,
+          "type" : "string"
+        } ],
+        "responses" : {
+          "200" : {
+            "description" : "Status 200"
+          }
+        }
+      }
+    },
+    "/user/delete" : {
+      "post" : {
+        "tags" : [ "User" ],
+        "summary" : "DeleteUser",
+        "operationId" : "postUserDelete",
+        "parameters" : [ {
+          "name" : "userId",
+          "in" : "query",
+          "required" : true,
+          "type" : "integer",
+          "format" : "int64"
+        } ],
+        "responses" : {
+          "200" : {
+            "description" : "Status 200"
+          }
+        }
+      }
+    },
+    "/user/edit" : {
+      "post" : {
+        "tags" : [ "User" ],
+        "summary" : "EditUser",
+        "operationId" : "postUserEdit",
+        "parameters" : [ {
+          "name" : "user",
+          "in" : "query",
+          "required" : true,
+          "type" : "string"
+        } ],
+        "responses" : {
+          "200" : {
+            "description" : "Status 200"
+          }
+        }
+      }
+    },
+    "/user/list" : {
+      "get" : {
+        "tags" : [ "User" ],
+        "summary" : "ListUser",
+        "operationId" : "getUserList",
+        "produces" : [ "application/json" ],
+        "parameters" : [ ],
+        "responses" : {
+          "200" : {
+            "description" : "Status 200",
+            "schema" : {
+              "type" : "array",
+              "items" : {
+                "$ref" : "#/definitions/User"
+              }
+            }
+          }
+        }
+      }
+    }
+  },
+  "securityDefinitions" : {
+    "HTTP_BASIC" : {
+      "description" : "All GET methods are public, meaning that *you can read all the data*. Write operations require authentication and therefore are forbidden to the general public.",
+      "type" : "basic"
+    }
+  },
+  "definitions" : {
+    "Error" : {
+      "type" : "object",
+      "required" : [ "code" ],
+      "properties" : {
+        "code" : {
+          "type" : "integer",
+          "format" : "int64",
+          "minimum" : 400.0,
+          "maximum" : 599.0
+        },
+        "description" : {
+          "type" : "string"
+        },
+        "reasonPhrase" : {
+          "type" : "string"
+        }
+      },
+      "description" : "This general error structure is used throughout this API."
+    },
+    "Event" : {
+      "type" : "object",
+      "required" : [ "Date_End", "Date_Start", "Id", "Name", "SPOT", "Type" ],
+      "properties" : {
+        "Id" : {
+          "type" : "integer",
+          "format" : "int64"
+        },
+        "Name" : {
+          "type" : "string"
+        },
+        "Date_Start" : {
+          "type" : "string",
+          "format" : "date-time"
+        },
+        "Date_End" : {
+          "type" : "string",
+          "format" : "date-time"
+        },
+        "Description" : {
+          "type" : "string"
+        },
+        "SPOT" : {
+          "$ref" : "#/definitions/SPOT"
+        },
+        "Type" : {
+          "$ref" : "#/definitions/Event_Type"
+        },
+        "Atribute" : {
+          "$ref" : "#/definitions/Atribute"
+        }
+      }
+    },
+    "User" : {
+      "type" : "object",
+      "required" : [ "Id", "Mail", "Name", "Phone", "Surname", "Username" ],
+      "properties" : {
+        "Id" : {
+          "type" : "integer",
+          "format" : "int64"
+        },
+        "Username" : {
+          "type" : "string"
+        },
+        "Name" : {
+          "type" : "string"
+        },
+        "Surname" : {
+          "type" : "string"
+        },
+        "Mail" : {
+          "type" : "string"
+        },
+        "Phone" : {
+          "type" : "number",
+          "format" : "double"
+        }
+      }
+    },
+    "SPOT_Type" : {
+      "type" : "object",
+      "required" : [ "Id", "Type" ],
+      "properties" : {
+        "Id" : {
+          "type" : "integer",
+          "format" : "int64"
+        },
+        "Type" : {
+          "type" : "string"
+        },
+        "Description" : {
+          "type" : "string"
+        }
+      }
+    },
+    "Event_Type" : {
+      "type" : "object",
+      "required" : [ "Id", "Type" ],
+      "properties" : {
+        "Id" : {
+          "type" : "integer",
+          "format" : "int64"
+        },
+        "Type" : {
+          "type" : "string"
+        },
+        "Description" : {
+          "type" : "string"
+        }
+      }
+    },
+    "SPOT" : {
+      "type" : "object",
+      "required" : [ "Address", "Comercial_Name", "Id", "Lat", "Lon", "Mail", "NIF", "Name", "Phone", "Type", "User" ],
+      "properties" : {
+        "Id" : {
+          "type" : "integer",
+          "format" : "int64"
+        },
+        "Name" : {
+          "type" : "string"
+        },
+        "Comercial_Name" : {
+          "type" : "string"
+        },
+        "NIF" : {
+          "type" : "number",
+          "format" : "double"
+        },
+        "Mail" : {
+          "type" : "string"
+        },
+        "Phone" : {
+          "type" : "number",
+          "format" : "double"
+        },
+        "Address" : {
+          "type" : "string"
+        },
+        "Description" : {
+          "type" : "string"
+        },
+        "Lat" : {
+          "type" : "number",
+          "format" : "double"
+        },
+        "Lon" : {
+          "type" : "number",
+          "format" : "double"
+        },
+        "Type" : {
+          "$ref" : "#/definitions/SPOT_Type"
+        },
+        "User" : {
+          "$ref" : "#/definitions/User"
+        }
+      }
+    },
+    "Log_Type" : {
+      "type" : "object",
+      "required" : [ "Id", "Name" ],
+      "properties" : {
+        "Id" : {
+          "type" : "integer",
+          "format" : "int64"
+        },
+        "Name" : {
+          "type" : "string"
+        },
+        "Description" : {
+          "type" : "string"
+        }
+      }
+    },
+    "Log_User" : {
+      "type" : "object",
+      "required" : [ "Id", "Lat", "Lon", "Timestamp", "Type", "User" ],
+      "properties" : {
+        "Id" : {
+          "type" : "integer",
+          "format" : "int64"
+        },
+        "Timestamp" : {
+          "type" : "string",
+          "format" : "date-time"
+        },
+        "Lat" : {
+          "type" : "number",
+          "format" : "double"
+        },
+        "Lon" : {
+          "type" : "number",
+          "format" : "double"
+        },
+        "User" : {
+          "$ref" : "#/definitions/User"
+        },
+        "Type" : {
+          "$ref" : "#/definitions/Log_Type"
+        }
+      }
+    },
+    "Event_User" : {
+      "type" : "object",
+      "required" : [ "Arrival", "Departure", "Event", "Id", "User" ],
+      "properties" : {
+        "Id" : {
+          "type" : "integer",
+          "format" : "int64"
+        },
+        "Arrival" : {
+          "type" : "string",
+          "format" : "date-time"
+        },
+        "Departure" : {
+          "type" : "string",
+          "format" : "date-time"
+        },
+        "Event" : {
+          "$ref" : "#/definitions/Event"
+        },
+        "User" : {
+          "$ref" : "#/definitions/User"
+        }
+      }
+    },
+    "Atribute" : {
+      "type" : "object",
+      "required" : [ "Id", "Type" ],
+      "properties" : {
+        "Id" : {
+          "type" : "integer",
+          "format" : "int64"
+        },
+        "Type" : {
+          "type" : "string"
+        },
+        "Description" : {
+          "type" : "string"
+        }
+      }
+    }
+  }
+}
