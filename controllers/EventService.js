@@ -127,7 +127,7 @@ exports.getEventList = function(args, res, next) {
                   + "INNER JOIN TYPE_EVENT ON EVENT.TYPE_EVENT_id = TYPE_EVENT.id "
                   + "INNER JOIN SPOT ON SPOT.id = EVENT.SPOT_id "
                   + "INNER JOIN TYPE_SPOT ON SPOT.TYPE_SPOT_id = TYPE_SPOT.id "
-                  + "INNER JOIN ATRIBUTE ON ATRIBUTE.EVENT_id = EVENT.id "
+                  + "LEFT JOIN ATRIBUTE ON ATRIBUTE.EVENT_id = EVENT.id "
                   + "ORDER BY EVENT.id "
                   ;
     con.query(sql, function (err, result, fields) {
@@ -144,7 +144,8 @@ exports.getEventList = function(args, res, next) {
         var x = 0;
         for (var i in result){
           if (resultId == result[i].id){
-            attrList.push([{"type" : result[i].ATRIBUTE_type, "description" : result[i].ATRIBUTE_description}]);
+            if (result[i].ATRIBUTE_type || result[i].ATRIBUTE_description)
+              attrList.push([{"type" : result[i].ATRIBUTE_type, "description" : result[i].ATRIBUTE_description}]);
           } else {
             eventList[x] = [{
               "Event" : {
@@ -170,7 +171,8 @@ exports.getEventList = function(args, res, next) {
               }
             }];
             attrList = [];
-            attrList.push([{"type" : result[i].ATRIBUTE_type, "description" : result[i].ATRIBUTE_description}]);
+            if (result[i].ATRIBUTE_type || result[i].ATRIBUTE_description)
+              attrList.push([{"type" : result[i].ATRIBUTE_type, "description" : result[i].ATRIBUTE_description}]);
             resultId = result[i].id;
             x++;
           }
@@ -199,7 +201,6 @@ exports.getEventList = function(args, res, next) {
               }
             }];
           }
-          
         }
         con.release();
         res.setHeader('Content-Type', 'application/json');
@@ -218,8 +219,34 @@ exports.postEventCreate = function(args, res, next) {
    * parameters expected in the args:
   * event (String)
   **/
+  var event = args.Event.value.split(",");
+  
+  con.getConnection(function(err, con) {
+    if (err) {
+      con.release();
+      res.end();
+      throw err;
+    }
+    var sql = "insert into mydb.EVENT(name, date_start, date_end, description, SPOT_id, TYPE_EVENT_id)" +
+              "values ('" + 
+              event[0] + "','" +
+              event[1] + "','" +
+              event[2] + "','" +
+              event[3] + "'," +
+              event[4] + "," +
+              event[4] + ");";
+
+    con.query(sql, function (err, result, fields) {
+      if (err) {
+        con.release();
+        res.end();
+        throw err;
+      }
+    });
+    con.release();
+    res.end();
+  }); 
   // no response value expected for this operation
-  res.end();
 }
 
 exports.postEventDelete = function(args, res, next) {
@@ -227,8 +254,27 @@ exports.postEventDelete = function(args, res, next) {
    * parameters expected in the args:
   * eventId (Long)
   **/
-  // no response value expected for this operation
-  res.end();
+ var id = args.EventId.value;
+  con.getConnection(function(err, con) {
+    if (err) {
+      con.release();
+      res.end();
+      throw err;
+    }
+    var sql = "delete from mydb.EVENT " + 
+              "where EVENT.id = " + id;
+
+    con.query(sql, function (err, result, fields) {
+      if (err) {
+        con.release();
+        res.end();
+        throw err;
+      }
+    });
+    con.release();
+    res.end();
+  }); 
+ // no response value expected for this operation
 }
 
 exports.postEventEdit = function(args, res, next) {
@@ -236,7 +282,36 @@ exports.postEventEdit = function(args, res, next) {
    * parameters expected in the args:
   * event (String)
   **/
+ var event = args.Event.value.split(",");
+  
+ con.getConnection(function(err, con) {
+   if (err) {
+     con.release();
+     res.end();
+     throw err;
+   }
+   var sql = "update mydb.EVENT " +
+             "set " + 
+             "name = '" + event[1] + "', " +
+             "date_start = '" + event[2] + "', " +
+             "date_end = '" + event[3] + "', " +
+             "description = '" + event[4] + "', " +
+             "SPOT_id = " + event[5] + ", " +
+             "TYPE_EVENT_id = " + event[6] + " " +
+             "where EVENT.id = " + event[0];
+    
+    console.log(sql);
+
+   con.query(sql, function (err, result, fields) {
+     if (err) {
+       con.release();
+       res.end();
+       throw err;
+     }
+   });
+   con.release();
+   res.end();
+ }); 
   // no response value expected for this operation
-  res.end();
 }
 
