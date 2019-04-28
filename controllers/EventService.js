@@ -102,12 +102,14 @@ exports.getEventList = function(args, res, next) {
   /**
    * parameters expected in the args:
   **/
+
   con.getConnection(function(err, con) {
     if (err) {
       con.release();
       res.end();
       throw err;
     }
+    var datetime = new Date().toISOString().slice(0, 19).replace('T', ' ');
     var sql = "SELECT "
                   + "EVENT.*, "
                   + "TYPE_EVENT.type as TYPE_EVENT_type, "
@@ -128,6 +130,7 @@ exports.getEventList = function(args, res, next) {
                   + "INNER JOIN SPOT ON SPOT.id = EVENT.SPOT_id "
                   + "INNER JOIN TYPE_SPOT ON SPOT.TYPE_SPOT_id = TYPE_SPOT.id "
                   + "LEFT JOIN ATRIBUTE ON ATRIBUTE.EVENT_id = EVENT.id "
+                  + "WHERE EVENT.date_start <= " + "'" + datetime + "'" + " AND EVENT.date_end >= " + "'" + datetime + "'" + " "
                   + "ORDER BY EVENT.id "
                   ;
     con.query(sql, function (err, result, fields) {
