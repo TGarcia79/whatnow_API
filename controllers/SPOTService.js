@@ -115,7 +115,7 @@ exports.getSpotList = function(args, res, next) {
           "SPOT" : {
             "Id" : result[i].id,
             "Name" : result[i].name,
-            "Comercial_Name" : result[0].comercial_name,
+            "Comercial_Name" : result[i].comercial_name,
             "NIF" : result[i].nif,
             "Mail" : result[i].mail,
             "Phone" : result[i].phone,
@@ -153,7 +153,7 @@ exports.postSpotCreate = function(args, res, next) {
    * parameters expected in the args:
   * sPOT (String)
   **/
- var spot = args.Event.value.split(",");
+ var spot = args.SPOT.value.split(",");
   
   con.getConnection(function(err, con) {
     if (err) {
@@ -161,19 +161,48 @@ exports.postSpotCreate = function(args, res, next) {
       res.end();
       throw err;
     }
-    var sql = "insert into mydb.SPOT(name, comercial_name, nif, mail, phone, address, description, lat, lon, TYPE_SPOT_id, USER_id)" +
+    var sql = "insert into mydb.SPOT(name, commercial_name, nif, mail, phone, address, description, coordinates, TYPE_SPOT_id, USER_id)" +
               "values ('" + 
               spot[0] + "','" +//name
-              spot[1] + "'," +//com_name
-              spot[2] + ",'" +//nif
-              spot[3] + "'," +//mail
-              spot[4] + ",'" +//phone
+              spot[1] + "','" +//com_name
+              spot[2] + "','" +//nif
+              spot[3] + "','" +//mail
+              spot[4] + "','" +//phone
               spot[5] + "','" +//address
-              spot[6] + "'," +//desc
-              spot[7] + "," +//lat
-              spot[8] + "," +//lon
+              spot[6] + "',ST_GeomFromText('POINT(" +//desc
+              spot[8] + " " +//lat
+              spot[7] + ")')," +//lon
               spot[9] + "," +//type_spot
               spot[10] + ");";//user
+
+    con.query(sql, function (err, result, fields) {
+      if (err) {
+        con.release();
+        res.end();
+        throw err;
+      }
+      var SPOT_id = { "id" : result.insertId };
+      con.release();
+      res.end(JSON.stringify(SPOT_id));
+    });
+  }); 
+  // no response value expected for this operation
+}
+
+exports.postSpotDelete = function(args, res, next) {
+  /**
+   * parameters expected in the args:
+  * spotId (Long)
+  **/
+ var id = args.spotId.value;
+  con.getConnection(function(err, con) {
+    if (err) {
+      con.release();
+      res.end();
+      throw err;
+    }
+    var sql = "delete from mydb.SPOT " + 
+              "where SPOT.id = " + id;
 
     con.query(sql, function (err, result, fields) {
       if (err) {
@@ -186,16 +215,6 @@ exports.postSpotCreate = function(args, res, next) {
     res.end();
   }); 
   // no response value expected for this operation
-  res.end();
-}
-
-exports.postSpotDelete = function(args, res, next) {
-  /**
-   * parameters expected in the args:
-  * spotId (Long)
-  **/
-  // no response value expected for this operation
-  res.end();
 }
 
 exports.postSpotEdit = function(args, res, next) {
@@ -203,7 +222,38 @@ exports.postSpotEdit = function(args, res, next) {
    * parameters expected in the args:
   * spot (String)
   **/
+ var spot = args.spot.value.split(",");
+  
+ con.getConnection(function(err, con) {
+   if (err) {
+     con.release();
+     res.end();
+     throw err;
+   }
+   var sql = "update mydb.SPOT " +
+             "set " + 
+             "name = '" + spot[1] + "', " +
+             "commercial_name = '" + spot[2] + "', " +
+             "nif = '" + spot[3] + "', " +
+             "mail = '" + spot[4] + "', " +
+             "phone = '" + spot[5] + "', " +
+             "address = '" + spot[6] + "', " +
+             "description = '" + spot[7] + "', " +
+             "coordinates = ST_GeomFromText('POINT(" + spot[9] + " " + spot[8] + ")'), " +
+             "TYPE_SPOT_id = " + spot[10] + ", " +
+             "USER_id = " + spot[11] + " " +
+             "where SPOT.id = " + spot[0];
+
+   con.query(sql, function (err, result, fields) {
+     if (err) {
+       con.release();
+       res.end();
+       throw err;
+     }
+   });
+   con.release();
+   res.end();
+ }); 
   // no response value expected for this operation
-  res.end();
 }
 

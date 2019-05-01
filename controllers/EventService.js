@@ -245,9 +245,11 @@ exports.postEventCreate = function(args, res, next) {
         res.end();
         throw err;
       }
+
+      var Event_id = { "id" : result.insertId };
+      con.release();
+      res.end(JSON.stringify(Event_id));
     });
-    con.release();
-    res.end();
   }); 
   // no response value expected for this operation
 }
@@ -302,8 +304,6 @@ exports.postEventEdit = function(args, res, next) {
              "SPOT_id = " + event[5] + ", " +
              "TYPE_EVENT_id = " + event[6] + " " +
              "where EVENT.id = " + event[0];
-    
-    console.log(sql);
 
    con.query(sql, function (err, result, fields) {
      if (err) {

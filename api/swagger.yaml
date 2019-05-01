@@ -54,6 +54,8 @@ paths:
       responses:
         200:
           description: "Status 200"
+          schema:
+            $ref: "#/definitions/Event"
       x-swagger-router-controller: "Event"
   /event/delete:
     post:
