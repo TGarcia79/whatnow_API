@@ -148,10 +148,9 @@ exports.getEventList = function(args, res, next) {
         for (var i in result){
           if (resultId == result[i].id){
             if (result[i].ATRIBUTE_type || result[i].ATRIBUTE_description)
-              attrList.push([{"type" : result[i].ATRIBUTE_type, "description" : result[i].ATRIBUTE_description}]);
+              attrList.push({"type" : result[i].ATRIBUTE_type, "description" : result[i].ATRIBUTE_description});
           } else {
-            eventList[x] = [{
-              "Event" : {
+            eventList[x] = {
                 "Id" : result[i-1].id,
                 "Name" : result[i-1].name,
                 "Date_Start" : result[i-1].date_start,
@@ -171,17 +170,15 @@ exports.getEventList = function(args, res, next) {
                   "Type" : result[i-1].TYPE_SPOT_type,
                 },
                 "Atributes" : attrList
-              }
-            }];
+              };
             attrList = [];
             if (result[i].ATRIBUTE_type || result[i].ATRIBUTE_description)
-              attrList.push([{"type" : result[i].ATRIBUTE_type, "description" : result[i].ATRIBUTE_description}]);
+              attrList.push({"type" : result[i].ATRIBUTE_type, "description" : result[i].ATRIBUTE_description});
             resultId = result[i].id;
             x++;
           }
           if(i == result.length-1){
-            eventList[x] = [{
-              "Event" : {
+            eventList[x] = {
                 "Id" : result[i].id,
                 "Name" : result[i].name,
                 "Date_Start" : result[i].date_start,
@@ -201,13 +198,13 @@ exports.getEventList = function(args, res, next) {
                   "Type" : result[i].TYPE_SPOT_type,
                 },
                 "Atributes" : attrList
-              }
-            }];
+              };
           }
         }
         con.release();
         res.setHeader('Content-Type', 'application/json');
-        res.end(JSON.stringify(eventList));
+        var json = { "Events" : eventList };
+        res.end(JSON.stringify(json));
       }
       else {
         con.release();

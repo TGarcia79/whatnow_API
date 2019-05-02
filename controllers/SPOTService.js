@@ -43,11 +43,10 @@ con.getConnection(function(err, con) {
 
     if(Object.keys(result).length > 0) {
       
-      var spot = [{
-        "SPOT" : {
+      var spot = {
           "Id" : result[0].id,
           "Name" : result[0].name,
-          "Comercial_Name" : result[0].comercial_name,
+          "Commercial_Name" : result[0].commercial_name,
           "NIF" : result[0].nif,
           "Mail" : result[0].mail,
           "Phone" : result[0].phone,
@@ -62,9 +61,7 @@ con.getConnection(function(err, con) {
             "Mail" : result[0].USER_mail,
             "Phone" : result[0].USER_phone,
           }
-        }
-        
-      }];
+        };
       con.release();
       res.setHeader('Content-Type', 'application/json');
       res.end(JSON.stringify(spot));
@@ -111,11 +108,10 @@ exports.getSpotList = function(args, res, next) {
     if(Object.keys(result).length > 0) {
       var spotList = [];
       for (var i in result){
-        spotList[i] = [{
-          "SPOT" : {
+        spotList[i] = {
             "Id" : result[i].id,
             "Name" : result[i].name,
-            "Comercial_Name" : result[i].comercial_name,
+            "Commercial_Name" : result[i].commercial_name,
             "NIF" : result[i].nif,
             "Mail" : result[i].mail,
             "Phone" : result[i].phone,
@@ -130,13 +126,14 @@ exports.getSpotList = function(args, res, next) {
               "Mail" : result[i].USER_mail,
               "Phone" : result[i].USER_phone,
             }
-          }
-        }];
-      }        
+          };
+      }  
+      
+      var json = { "SPOTs" : spotList };
       
       con.release();
       res.setHeader('Content-Type', 'application/json');
-      res.end(JSON.stringify(spotList));
+      res.end(JSON.stringify(json));
                        
     }
     else {
