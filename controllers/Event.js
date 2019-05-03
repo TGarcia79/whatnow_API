@@ -25,3 +25,14 @@ module.exports.postEventDelete = function postEventDelete (req, res, next) {
 module.exports.postEventEdit = function postEventEdit (req, res, next) {
   Event.postEventEdit(req.swagger.params, res, next);
 };
+module.exports.postAtributeCreate = function postAtributeCreate (req, res, next) {
+  Event.postAtributeCreate(req.swagger.params, res, next);
+};
+
+module.exports.postAtributeDelete = function postAtributeDelete (req, res, next) {
+  Event.postAtributeDelete(req.swagger.params, res, next);
+};
+
+module.exports.postAtributeEdit = function postAtributeEdit (req, res, next) {
+  Event.postAtributeEdit(req.swagger.params, res, next);
+};

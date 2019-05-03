@@ -20,6 +20,54 @@ tags:
 schemes:
 - "https"
 paths:
+  /event/atribute/create:
+    post:
+      tags:
+      - "Atribute"
+      summary: "CreateAtribute"
+      operationId: "postAtributeCreate"
+      parameters:
+      - name: "Atribute"
+        in: "query"
+        required: true
+        type: "string"
+      responses:
+        200:
+          description: "Status 200"
+          schema:
+            $ref: "#/definitions/Atribute"
+      x-swagger-router-controller: "Event"
+  /event/atribute/delete:
+    post:
+      tags:
+      - "Atribute"
+      summary: "DeleteAtribute"
+      operationId: "postAtributeDelete"
+      parameters:
+      - name: "AtributeId"
+        in: "query"
+        required: true
+        type: "integer"
+        format: "int64"
+      responses:
+        200:
+          description: "Status 200"
+      x-swagger-router-controller: "Event"
+  /event/atribute/edit:
+    post:
+      tags:
+      - "Atribute"
+      summary: "EditAtribute"
+      operationId: "postAtributeEdit"
+      parameters:
+      - name: "Atribute"
+        in: "query"
+        required: true
+        type: "string"
+      responses:
+        200:
+          description: "Status 200"
+      x-swagger-router-controller: "Event"
   /event:
     get:
       tags:

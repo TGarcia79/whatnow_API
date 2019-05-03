@@ -315,3 +315,96 @@ exports.postEventEdit = function(args, res, next) {
   // no response value expected for this operation
 }
 
+exports.postAtributeCreate = function(args, res, next) {
+  /**
+   * parameters expected in the args:
+  * atribute (String)
+  **/
+  var atribute = args.Atribute.value.split(",");
+  
+  con.getConnection(function(err, con) {
+    if (err) {
+      con.release();
+      res.end();
+      throw err;
+    }
+    var sql = "insert into mydb.ATRIBUTE(EVENT_id, type, description)" +
+              "values (" + 
+              atribute[0] + ",'" +
+              atribute[1] + "','" +
+              atribute[2] + "');";
+
+    con.query(sql, function (err, result, fields) {
+      if (err) {
+        con.release();
+        res.end();
+        throw err;
+      }
+
+      var Event_id = { "id" : result.insertId };
+      con.release();
+      res.end(JSON.stringify(Event_id));
+    });
+  }); 
+  // no response value expected for this operation
+}
+
+exports.postAtributeDelete = function(args, res, next) {
+  /**
+   * parameters expected in the args:
+  * eventId (Long)
+  **/
+ var id = args.AtributeId.value;
+  con.getConnection(function(err, con) {
+    if (err) {
+      con.release();
+      res.end();
+      throw err;
+    }
+    var sql = "delete from mydb.ATRIBUTE " + 
+              "where ATRIBUTE.id = " + id;
+
+    con.query(sql, function (err, result, fields) {
+      if (err) {
+        con.release();
+        res.end();
+        throw err;
+      }
+    });
+    con.release();
+    res.end();
+  }); 
+ // no response value expected for this operation
+}
+
+exports.postAtributeEdit = function(args, res, next) {
+  /**
+   * parameters expected in the args:
+  * event (String)
+  **/
+ var atribute = args.Atribute.value.split(",");
+  
+ con.getConnection(function(err, con) {
+   if (err) {
+     con.release();
+     res.end();
+     throw err;
+   }
+   var sql = "update mydb.ATRIBUTE " +
+             "set " + 
+             "type = '" + atribute[1] + "', " +
+             "description = '" + atribute[2] + "' " +
+             "where ATRIBUTE.id = " + atribute[0];
+
+   con.query(sql, function (err, result, fields) {
+     if (err) {
+       con.release();
+       res.end();
+       throw err;
+     }
+   });
+   con.release();
+   res.end();
+ }); 
+  // no response value expected for this operation
+}
