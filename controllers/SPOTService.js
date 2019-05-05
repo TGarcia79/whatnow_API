@@ -24,7 +24,10 @@ con.getConnection(function(err, con) {
   }
   var sql = "SELECT "
                 + "SPOT.*, "
+                + "TYPE_SPOT.id as TYPE_SPOT_id, "
                 + "TYPE_SPOT.type as TYPE_SPOT_type, "
+                + "TYPE_SPOT.description as TYPE_SPOT_description, "
+                + "USER.id as USER_id, "
                 + "USER.username as USER_username, "
                 + "USER.name as USER_name, "
                 + "USER.surname as USER_surname, "
@@ -53,8 +56,13 @@ con.getConnection(function(err, con) {
           "Address" : result[0].address,
           "Description" : result[0].description,
           "Coordinates" : result[0].coordinates,
-          "Type" : result[0].TYPE_SPOT_type,
+          "Type" : {
+            "id" : result[0].TYPE_SPOT_id,
+            "type" : result[0].TYPE_SPOT_type,
+            "description" : result[0].TYPE_SPOT_description,
+          },
           "USER" : {
+            "id" : result[0].USER_id,
             "Username" : result[0].USER_username,
             "Name" : result[0].USER_name,
             "Surname" : result[0].USER_surname,
@@ -88,7 +96,10 @@ exports.getSpotList = function(args, res, next) {
   }
   var sql = "SELECT "
                 + "SPOT.*, "
+                + "TYPE_SPOT.id as TYPE_SPOT_id, "
                 + "TYPE_SPOT.type as TYPE_SPOT_type, "
+                + "TYPE_SPOT.description as TYPE_SPOT_description, "
+                + "USER.id as USER_id, "
                 + "USER.username as USER_username, "
                 + "USER.name as USER_name, "
                 + "USER.surname as USER_surname, "
@@ -118,8 +129,13 @@ exports.getSpotList = function(args, res, next) {
             "Address" : result[i].address,
             "Description" : result[i].description,
             "Coordinates" : result[i].coordinates,
-            "Type" : result[i].TYPE_SPOT_type,
+            "Type" : {
+              "id" : result[i].TYPE_SPOT_id,
+              "type" : result[i].TYPE_SPOT_type,
+              "description" : result[i].TYPE_SPOT_description,
+            },
             "USER" : {
+              "id" : result[i].USER_id,
               "Username" : result[i].USER_username,
               "Name" : result[i].USER_name,
               "Surname" : result[i].USER_surname,
