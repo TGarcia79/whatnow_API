@@ -492,7 +492,7 @@ paths:
       parameters:
       - name: "spot"
         in: "query"
-        required: false
+        required: true
         type: "string"
       responses:
         200:
