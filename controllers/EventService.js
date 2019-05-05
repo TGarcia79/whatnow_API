@@ -23,7 +23,9 @@ exports.getEvent = function(args, res, next) {
     }
     var sql = "SELECT "
                   + "EVENT.*, "
+                  + "TYPE_EVENT.id as TYPE_EVENT_id, "
                   + "TYPE_EVENT.type as TYPE_EVENT_type, "
+                  + "TYPE_EVENT.description as TYPE_EVENT_desccription, "
                   + "SPOT.id as SPOT_id, "
                   + "SPOT.name as SPOT_name, "
                   + "SPOT.commercial_name as SPOT_commercial_name, "
@@ -47,9 +49,7 @@ exports.getEvent = function(args, res, next) {
       }    
 
       if(Object.keys(result).length > 0) {
-        var sql_Atribute = "SELECT "
-                         + "ATRIBUTE.type, "
-                         + "ATRIBUTE.description "
+        var sql_Atribute = "SELECT * "
                          + "FROM ATRIBUTE "
                          + "WHERE EVENT_id = " + result[0].id;
 
@@ -67,7 +67,11 @@ exports.getEvent = function(args, res, next) {
               "Date_Start" : result[0].date_start,
               "Date_End" : result[0].date_end,
               "Description" : result[0].description,
-              "Type" : result[0].TYPE_EVENT_type,
+              "Type" : {
+                "id" : result[0].TYPE_EVENT_id,
+                "type" : result[0].TYPE_EVENT_type,
+                "description" : result[0].TYPE_EVENT_description,
+              },
               "SPOT" : {
                 "Id" : result[0].SPOT_id,
                 "Name" : result[0].SPOT_name,
@@ -123,6 +127,7 @@ exports.getEventList = function(args, res, next) {
                   + "SPOT.description as SPOT_description, "
                   + "SPOT.coordinates as SPOT_coordinates, "
                   + "TYPE_SPOT.type as TYPE_SPOT_type, "
+                  + "ATRIBUTE.id as ATRIBUTE_id, "
                   + "ATRIBUTE.type as ATRIBUTE_type, "
                   + "ATRIBUTE.description as ATRIBUTE_description "
                   + "FROM EVENT "
@@ -147,8 +152,8 @@ exports.getEventList = function(args, res, next) {
         var x = 0;
         for (var i in result){
           if (resultId == result[i].id){
-            if (result[i].ATRIBUTE_type || result[i].ATRIBUTE_description)
-              attrList.push({"type" : result[i].ATRIBUTE_type, "description" : result[i].ATRIBUTE_description});
+            if (result[i].ATRIBUTE_id || result[i].ATRIBUTE_type || result[i].ATRIBUTE_description)
+              attrList.push({"id" : result[i].ATRIBUTE_id, "type" : result[i].ATRIBUTE_type, "description" : result[i].ATRIBUTE_description});
           } else {
             eventList[x] = {
                 "Id" : result[i-1].id,
@@ -156,7 +161,11 @@ exports.getEventList = function(args, res, next) {
                 "Date_Start" : result[i-1].date_start,
                 "Date_End" : result[i-1].date_end,
                 "Description" : result[i-1].description,
-                "Type" : result[i-1].TYPE_EVENT_type,
+                "Type" : {
+                  "id" : result[i-1].TYPE_EVENT_id,
+                  "type" : result[i-1].TYPE_EVENT_type,
+                  "description" : result[i-1].TYPE_EVENT_description,
+                },
                 "SPOT" : {
                   "Id" : result[i-1].SPOT_id,
                   "Name" : result[i-1].SPOT_name,
@@ -173,7 +182,7 @@ exports.getEventList = function(args, res, next) {
               };
             attrList = [];
             if (result[i].ATRIBUTE_type || result[i].ATRIBUTE_description)
-              attrList.push({"type" : result[i].ATRIBUTE_type, "description" : result[i].ATRIBUTE_description});
+              attrList.push({"id" : result[i].ATRIBUTE_id, "type" : result[i].ATRIBUTE_type, "description" : result[i].ATRIBUTE_description});
             resultId = result[i].id;
             x++;
           }
@@ -184,7 +193,11 @@ exports.getEventList = function(args, res, next) {
                 "Date_Start" : result[i].date_start,
                 "Date_End" : result[i].date_end,
                 "Description" : result[i].description,
-                "Type" : result[i].TYPE_EVENT_type,
+                "Type" : {
+                  "id" : result[i].TYPE_EVENT_id,
+                  "type" : result[i].TYPE_EVENT_type,
+                  "description" : result[i].TYPE_EVENT_description,
+                },
                 "SPOT" : {
                   "Id" : result[i].SPOT_id,
                   "Name" : result[i].SPOT_name,
