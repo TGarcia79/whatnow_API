@@ -106,14 +106,32 @@ exports.getEventList = function(args, res, next) {
   /**
    * parameters expected in the args:
   **/
-
+  var params = args.query.value;
+  var paramsArray = [];
+  var filter = " ";
+  if(params){
+    var datetime = new Date().toISOString().slice(0, 19).replace('T', ' ');
+    console.log(params);
+    if (params == 1){
+      filter = "WHERE EVENT.date_start <= '" + datetime + "' AND " + "EVENT.date_end >= '" + datetime + "' "
+    } else if (params.includes(",")){
+      paramsArray = params.split(",");
+      if (paramsArray.length == 4){
+        filter = "WHERE ST_Distance_Sphere(SPOT.coordinates, POINT(" + paramsArray[2] + "," + paramsArray[1] + ")) <= " + paramsArray[3] + " ";
+        if (paramsArray == 1){
+          filter = filter + "AND EVENT.date_start <= '" + datetime + "' AND " + "EVENT.date_end >= '" + datetime + "' ";
+        }
+      }
+    }
+  }
+  
   con.getConnection(function(err, con) {
     if (err) {
       con.release();
       res.end();
       throw err;
     }
-    var datetime = new Date().toISOString().slice(0, 19).replace('T', ' ');
+    console.log(filter);
     var sql = "SELECT "
                   + "EVENT.*, "
                   + "TYPE_EVENT.type as TYPE_EVENT_type, "
@@ -135,9 +153,10 @@ exports.getEventList = function(args, res, next) {
                   + "INNER JOIN SPOT ON SPOT.id = EVENT.SPOT_id "
                   + "INNER JOIN TYPE_SPOT ON SPOT.TYPE_SPOT_id = TYPE_SPOT.id "
                   + "LEFT JOIN ATRIBUTE ON ATRIBUTE.EVENT_id = EVENT.id "
-                  + "WHERE EVENT.date_start <= " + "'" + datetime + "'" + " AND EVENT.date_end >= " + "'" + datetime + "'" + " "
-                  + "ORDER BY EVENT.id "
-                  ;
+                  + filter 
+                  + "ORDER BY EVENT.id";
+
+                  console.log(sql);
     con.query(sql, function (err, result, fields) {
       if (err) {
         con.release();
@@ -247,7 +266,7 @@ exports.postEventCreate = function(args, res, next) {
               event[2] + "','" +
               event[3] + "'," +
               event[4] + "," +
-              event[4] + ");";
+              event[5] + ");";       
 
     con.query(sql, function (err, result, fields) {
       if (err) {

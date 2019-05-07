@@ -144,7 +144,11 @@ paths:
       operationId: "getEventList"
       produces:
       - "application/json"
-      parameters: []
+      parameters:
+      - name: "query"
+        in: "query"
+        required: false
+        type: "string"
       responses:
         200:
           description: "Status 200"
