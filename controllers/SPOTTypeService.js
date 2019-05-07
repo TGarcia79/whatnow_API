@@ -173,8 +173,8 @@ exports.postSpottypeEdit = function(args, res, next) {
    var sql = "update mydb.TYPE_SPOT " +
              "set " + 
              "type = '" + spotType[1] + "', " +
-             "description = '" + spotType[2] + "', " +
-             "where SPOT.id = " + spotType[0];
+             "description = '" + spotType[2] + "' " +
+             "where TYPE_SPOT.id = " + spotType[0];
 
    con.query(sql, function (err, result, fields) {
      if (err) {
