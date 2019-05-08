@@ -25,7 +25,7 @@ exports.getEvent = function(args, res, next) {
                   + "EVENT.*, "
                   + "TYPE_EVENT.id as TYPE_EVENT_id, "
                   + "TYPE_EVENT.type as TYPE_EVENT_type, "
-                  + "TYPE_EVENT.description as TYPE_EVENT_desccription, "
+                  + "TYPE_EVENT.description as TYPE_EVENT_description, "
                   + "SPOT.id as SPOT_id, "
                   + "SPOT.name as SPOT_name, "
                   + "SPOT.commercial_name as SPOT_commercial_name, "
@@ -134,7 +134,9 @@ exports.getEventList = function(args, res, next) {
     console.log(filter);
     var sql = "SELECT "
                   + "EVENT.*, "
+                  + "TYPE_EVENT.id as TYPE_EVENT_id, "
                   + "TYPE_EVENT.type as TYPE_EVENT_type, "
+                  + "TYPE_EVENT.description as TYPE_EVENT_description, "
                   + "SPOT.id as SPOT_id, "
                   + "SPOT.name as SPOT_name, "
                   + "SPOT.commercial_name as SPOT_commercial_name, "
