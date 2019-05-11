@@ -20,7 +20,7 @@ con.getConnection(function(err, con) {
   if (err) {
     con.release();
     res.end();
-    throw err;
+    console.log(err);
   }
   var sql = "SELECT "
                 + "SPOT.*, "
@@ -41,7 +41,7 @@ con.getConnection(function(err, con) {
     if (err) {
       con.release();
       res.end();
-      throw err;
+      console.log(err);
     }    
 
     if(Object.keys(result).length > 0) {
@@ -70,6 +70,7 @@ con.getConnection(function(err, con) {
             "Phone" : result[0].USER_phone,
           }
         };
+      console.log(spot);
       con.release();
       res.setHeader('Content-Type', 'application/json');
       res.end(JSON.stringify(spot));
@@ -88,11 +89,20 @@ exports.getSpotList = function(args, res, next) {
   /**
    * parameters expected in the args:
   **/
+ var params = args.query.value;
+  var paramsArray = [];
+  var filter = " ";
+  if(params){
+    console.log(params);
+    paramsArray = params.split(",");
+    filter = "WHERE ST_Distance_Sphere(SPOT.coordinates, POINT(" + paramsArray[1] + "," + paramsArray[0] + ")) <= " + paramsArray[2] + " ";
+    
+  }
  con.getConnection(function(err, con) {
   if (err) {
     con.release();
     res.end();
-    throw err;
+    console.log(err);
   }
   var sql = "SELECT "
                 + "SPOT.*, "
@@ -108,12 +118,13 @@ exports.getSpotList = function(args, res, next) {
                 + "FROM SPOT "
                 + "INNER JOIN TYPE_SPOT ON SPOT.TYPE_SPOT_id = TYPE_SPOT.id "
                 + "INNER JOIN USER ON USER.id = SPOT.USER_id "
+                + filter
                 + "ORDER BY SPOT.id";
   con.query(sql, function (err, result, fields) {
     if (err) {
       con.release();
       res.end();
-      throw err;
+      console.log(err);
     }    
 
     if(Object.keys(result).length > 0) {
@@ -147,6 +158,7 @@ exports.getSpotList = function(args, res, next) {
       
       var json = { "SPOTs" : spotList };
       
+      console.log(json);
       con.release();
       res.setHeader('Content-Type', 'application/json');
       res.end(JSON.stringify(json));
@@ -172,7 +184,7 @@ exports.postSpotCreate = function(args, res, next) {
     if (err) {
       con.release();
       res.end();
-      throw err;
+      console.log(err);
     }
     var sql = "insert into mydb.SPOT(name, commercial_name, nif, mail, phone, address, description, coordinates, TYPE_SPOT_id, USER_id)" +
               "values ('" + 
@@ -192,9 +204,10 @@ exports.postSpotCreate = function(args, res, next) {
       if (err) {
         con.release();
         res.end();
-        throw err;
+        console.log(err);
       }
       var SPOT_id = { "id" : result.insertId };
+      console.log(SPOT_id);
       con.release();
       res.end(JSON.stringify(SPOT_id));
     });
@@ -212,7 +225,7 @@ exports.postSpotDelete = function(args, res, next) {
     if (err) {
       con.release();
       res.end();
-      throw err;
+      console.log(err);
     }
     var sql = "delete from mydb.SPOT " + 
               "where SPOT.id = " + id;
@@ -221,9 +234,10 @@ exports.postSpotDelete = function(args, res, next) {
       if (err) {
         con.release();
         res.end();
-        throw err;
+        console.log(err);
       }
     });
+    console.log("delete SPOT: " + id);
     con.release();
     res.end();
   }); 
@@ -241,7 +255,7 @@ exports.postSpotEdit = function(args, res, next) {
    if (err) {
      con.release();
      res.end();
-     throw err;
+     console.log(err);
    }
    var sql = "update mydb.SPOT " +
              "set " + 
@@ -261,9 +275,10 @@ exports.postSpotEdit = function(args, res, next) {
      if (err) {
        con.release();
        res.end();
-       throw err;
+       console.log(err);
      }
    });
+   console.log("Update SPOT: " + id);
    con.release();
    res.end();
  }); 

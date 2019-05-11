@@ -19,7 +19,7 @@ exports.getSpottype = function(args, res, next) {
   if (err) {
     con.release();
     res.end();
-    throw err;
+    console.log(err);
   }
   var sql = "SELECT * "
                 + "FROM TYPE_SPOT "
@@ -28,7 +28,7 @@ exports.getSpottype = function(args, res, next) {
     if (err) {
       con.release();
       res.end();
-      throw err;
+      console.log(err);
     }    
 
     if(Object.keys(result).length > 0) {
@@ -38,6 +38,7 @@ exports.getSpottype = function(args, res, next) {
         "Type" : result[0].type,
         "Description" : result[0].description
         };
+        console.log(typeSpot);
       con.release();
       res.setHeader('Content-Type', 'application/json');
       res.end(JSON.stringify(typeSpot));
@@ -59,7 +60,7 @@ exports.getSpottypeList = function(args, res, next) {
   if (err) {
     con.release();
     res.end();
-    throw err;
+    console.log(err);
   }
   var sql = "SELECT * "
                 + "FROM TYPE_SPOT "
@@ -68,7 +69,7 @@ exports.getSpottypeList = function(args, res, next) {
     if (err) {
       con.release();
       res.end();
-      throw err;
+      console.log(err);
     }    
 
     if(Object.keys(result).length > 0) {
@@ -82,7 +83,7 @@ exports.getSpottypeList = function(args, res, next) {
       }  
       
       var json = { "SPOTsTypes" : typeSpotList };
-      
+      console.log(json);
       con.release();
       res.setHeader('Content-Type', 'application/json');
       res.end(JSON.stringify(json));
@@ -108,7 +109,7 @@ exports.postSpottypeCreate = function(args, res, next) {
    if (err) {
      con.release();
      res.end();
-     throw err;
+     console.log(err);
    }
    var sql = "insert into mydb.TYPE_SPOT(type, description)" +
              "values ('" + 
@@ -119,9 +120,10 @@ exports.postSpottypeCreate = function(args, res, next) {
      if (err) {
        con.release();
        res.end();
-       throw err;
+       console.log(err);
      }
      var spotType_id = { "id" : result.insertId };
+     console.log(spotType_id);
      con.release();
      res.end(JSON.stringify(spotType_id));
    });
@@ -139,7 +141,7 @@ exports.postSpottypeDelete = function(args, res, next) {
     if (err) {
       con.release();
       res.end();
-      throw err;
+      console.log(err);
     }
     var sql = "delete from mydb.TYPE_SPOT " + 
               "where TYPE_SPOT.id = " + id;
@@ -148,9 +150,10 @@ exports.postSpottypeDelete = function(args, res, next) {
       if (err) {
         con.release();
         res.end();
-        throw err;
+        console.log(err);
       }
     });
+    console.log("delete type spot: " + id);
     con.release();
     res.end();
   }); 
@@ -168,7 +171,7 @@ exports.postSpottypeEdit = function(args, res, next) {
    if (err) {
      con.release();
      res.end();
-     throw err;
+     console.log(err);
    }
    var sql = "update mydb.TYPE_SPOT " +
              "set " + 
@@ -180,9 +183,10 @@ exports.postSpottypeEdit = function(args, res, next) {
      if (err) {
        con.release();
        res.end();
-       throw err;
+       console.log(err);
      }
    });
+   console.log("Update type spot: " + spotType[0]);
    con.release();
    res.end();
  }); 

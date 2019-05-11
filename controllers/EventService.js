@@ -19,7 +19,7 @@ exports.getEvent = function(args, res, next) {
     if (err) {
       con.release();
       res.end();
-      throw err;
+      console.log(err);
     }
     var sql = "SELECT "
                   + "EVENT.*, "
@@ -45,7 +45,7 @@ exports.getEvent = function(args, res, next) {
       if (err) {
         con.release();
         res.end();
-        throw err;
+        console.log(err);
       }    
 
       if(Object.keys(result).length > 0) {
@@ -57,7 +57,7 @@ exports.getEvent = function(args, res, next) {
           if (err) {
             con.release();
             res.end();
-            throw err;
+            console.log(err);
           }
 
           var event = [{
@@ -88,6 +88,7 @@ exports.getEvent = function(args, res, next) {
             }
             
           }];
+          console.log(event);
           con.release();
           res.setHeader('Content-Type', 'application/json');
           res.end(JSON.stringify(event));
@@ -129,9 +130,8 @@ exports.getEventList = function(args, res, next) {
     if (err) {
       con.release();
       res.end();
-      throw err;
+      console.log(err);
     }
-    console.log(filter);
     var sql = "SELECT "
                   + "EVENT.*, "
                   + "TYPE_EVENT.id as TYPE_EVENT_id, "
@@ -157,13 +157,11 @@ exports.getEventList = function(args, res, next) {
                   + "LEFT JOIN ATRIBUTE ON ATRIBUTE.EVENT_id = EVENT.id "
                   + filter 
                   + "ORDER BY EVENT.id";
-
-                  console.log(sql);
     con.query(sql, function (err, result, fields) {
       if (err) {
         con.release();
         res.end();
-        throw err;
+        console.log(err);
       }
 
       if(Object.keys(result).length > 0) {
@@ -238,6 +236,7 @@ exports.getEventList = function(args, res, next) {
         con.release();
         res.setHeader('Content-Type', 'application/json');
         var json = { "Events" : eventList };
+        console.log(json);
         res.end(JSON.stringify(json));
       }
       else {
@@ -259,7 +258,7 @@ exports.postEventCreate = function(args, res, next) {
     if (err) {
       con.release();
       res.end();
-      throw err;
+      console.log(err);
     }
     var sql = "insert into mydb.EVENT(name, date_start, date_end, description, SPOT_id, TYPE_EVENT_id)" +
               "values ('" + 
@@ -274,10 +273,11 @@ exports.postEventCreate = function(args, res, next) {
       if (err) {
         con.release();
         res.end();
-        throw err;
+        console.log(err);
       }
 
       var Event_id = { "id" : result.insertId };
+      console.log(Event_id);
       con.release();
       res.end(JSON.stringify(Event_id));
     });
@@ -295,7 +295,7 @@ exports.postEventDelete = function(args, res, next) {
     if (err) {
       con.release();
       res.end();
-      throw err;
+      console.log(err);
     }
     var sql = "delete from mydb.EVENT " + 
               "where EVENT.id = " + id;
@@ -304,9 +304,10 @@ exports.postEventDelete = function(args, res, next) {
       if (err) {
         con.release();
         res.end();
-        throw err;
+        console.log(err);
       }
     });
+    console.log("delete Event: " + id);
     con.release();
     res.end();
   }); 
@@ -324,7 +325,7 @@ exports.postEventEdit = function(args, res, next) {
    if (err) {
      con.release();
      res.end();
-     throw err;
+     console.log(err);
    }
    var sql = "update mydb.EVENT " +
              "set " + 
@@ -340,9 +341,10 @@ exports.postEventEdit = function(args, res, next) {
      if (err) {
        con.release();
        res.end();
-       throw err;
+       console.log(err);
      }
    });
+   console.log("Update Event: "+  event[0]);
    con.release();
    res.end();
  }); 
@@ -360,7 +362,7 @@ exports.postAtributeCreate = function(args, res, next) {
     if (err) {
       con.release();
       res.end();
-      throw err;
+      console.log(err);
     }
     var sql = "insert into mydb.ATRIBUTE(EVENT_id, type, description)" +
               "values (" + 
@@ -372,10 +374,11 @@ exports.postAtributeCreate = function(args, res, next) {
       if (err) {
         con.release();
         res.end();
-        throw err;
+        console.log(err);
       }
 
       var Event_id = { "id" : result.insertId };
+      console.log(Event_id);
       con.release();
       res.end(JSON.stringify(Event_id));
     });
@@ -393,7 +396,7 @@ exports.postAtributeDelete = function(args, res, next) {
     if (err) {
       con.release();
       res.end();
-      throw err;
+      console.log(err);
     }
     var sql = "delete from mydb.ATRIBUTE " + 
               "where ATRIBUTE.id = " + id;
@@ -402,9 +405,10 @@ exports.postAtributeDelete = function(args, res, next) {
       if (err) {
         con.release();
         res.end();
-        throw err;
+        console.log(err);
       }
     });
+    console.log("delete Event: " + id);
     con.release();
     res.end();
   }); 
@@ -422,7 +426,7 @@ exports.postAtributeEdit = function(args, res, next) {
    if (err) {
      con.release();
      res.end();
-     throw err;
+     console.log(err);
    }
    var sql = "update mydb.ATRIBUTE " +
              "set " + 
@@ -434,9 +438,10 @@ exports.postAtributeEdit = function(args, res, next) {
      if (err) {
        con.release();
        res.end();
-       throw err;
+       console.log(err);
      }
    });
+   console.log("update Atribute: " + atribute[0]);
    con.release();
    res.end();
  }); 

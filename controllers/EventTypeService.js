@@ -19,7 +19,7 @@ exports.getEventtype = function(args, res, next) {
   if (err) {
     con.release();
     res.end();
-    throw err;
+    console.log(err);
   }
   var sql = "SELECT * "
                 + "FROM TYPE_EVENT "
@@ -28,7 +28,7 @@ exports.getEventtype = function(args, res, next) {
     if (err) {
       con.release();
       res.end();
-      throw err;
+      console.log(err);
     }    
 
     if(Object.keys(result).length > 0) {
@@ -38,6 +38,7 @@ exports.getEventtype = function(args, res, next) {
         "Type" : result[0].type,
         "Description" : result[0].description
         };
+        console.log(typeEvent);
       con.release();
       res.setHeader('Content-Type', 'application/json');
       res.end(JSON.stringify(typeEvent));
@@ -60,7 +61,7 @@ exports.getEventtypeList = function(args, res, next) {
   if (err) {
     con.release();
     res.end();
-    throw err;
+    console.log(err);
   }
   var sql = "SELECT * "
                 + "FROM TYPE_EVENT "
@@ -69,7 +70,7 @@ exports.getEventtypeList = function(args, res, next) {
     if (err) {
       con.release();
       res.end();
-      throw err;
+      console.log(err);
     }    
 
     if(Object.keys(result).length > 0) {
@@ -83,7 +84,7 @@ exports.getEventtypeList = function(args, res, next) {
       }  
       
       var json = { "EventsTypes" : typeEventList };
-      
+      console.log(json);
       con.release();
       res.setHeader('Content-Type', 'application/json');
       res.end(JSON.stringify(json));
@@ -109,7 +110,7 @@ exports.postEventtypeCreate = function(args, res, next) {
    if (err) {
      con.release();
      res.end();
-     throw err;
+     console.log(err);
    }
    var sql = "insert into mydb.TYPE_EVENT(type, description)" +
              "values ('" + 
@@ -120,9 +121,10 @@ exports.postEventtypeCreate = function(args, res, next) {
      if (err) {
        con.release();
        res.end();
-       throw err;
+       console.log(err);
      }
      var eventType_id = { "id" : result.insertId };
+     console.log(eventType_id);
      con.release();
      res.end(JSON.stringify(eventType_id));
    });
@@ -141,7 +143,7 @@ exports.postEventtypeDelete = function(args, res, next) {
     if (err) {
       con.release();
       res.end();
-      throw err;
+      console.log(err);
     }
     var sql = "delete from mydb.TYPE_EVENT " + 
               "where TYPE_EVENT.id = " + id;
@@ -150,9 +152,10 @@ exports.postEventtypeDelete = function(args, res, next) {
       if (err) {
         con.release();
         res.end();
-        throw err;
+        console.log(err);
       }
     });
+    console.log("delete type event: " + id);
     con.release();
     res.end();
   }); 
@@ -170,7 +173,7 @@ exports.postEventtypeEdit = function(args, res, next) {
    if (err) {
      con.release();
      res.end();
-     throw err;
+     console.log(err);
    }
    var sql = "update mydb.TYPE_EVENT " +
              "set " + 
@@ -183,9 +186,10 @@ exports.postEventtypeEdit = function(args, res, next) {
      if (err) {
        con.release();
        res.end();
-       throw err;
+       console.log(err);
      }
    });
+   console.log("update type event: " + eventType[0]);
    con.release();
    res.end();
  }); 
