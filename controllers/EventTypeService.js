@@ -38,7 +38,7 @@ exports.getEventtype = function(args, res, next) {
         "Type" : result[0].type,
         "Description" : result[0].description
         };
-        console.log(typeEvent);
+        console.log("type Event: " + args.EventTypeId.value);
       con.release();
       res.setHeader('Content-Type', 'application/json');
       res.end(JSON.stringify(typeEvent));
@@ -84,7 +84,7 @@ exports.getEventtypeList = function(args, res, next) {
       }  
       
       var json = { "EventsTypes" : typeEventList };
-      console.log(json);
+      console.log("type event list");
       con.release();
       res.setHeader('Content-Type', 'application/json');
       res.end(JSON.stringify(json));

@@ -88,7 +88,7 @@ exports.getEvent = function(args, res, next) {
             }
             
           }];
-          console.log(event);
+          console.log("event: " + args.EventId.value);
           con.release();
           res.setHeader('Content-Type', 'application/json');
           res.end(JSON.stringify(event));
@@ -236,7 +236,7 @@ exports.getEventList = function(args, res, next) {
         con.release();
         res.setHeader('Content-Type', 'application/json');
         var json = { "Events" : eventList };
-        console.log(json);
+        console.log("event list");
         res.end(JSON.stringify(json));
       }
       else {
@@ -408,7 +408,7 @@ exports.postAtributeDelete = function(args, res, next) {
         console.log(err);
       }
     });
-    console.log("delete Event: " + id);
+    console.log("delete Atribute: " + id);
     con.release();
     res.end();
   }); 

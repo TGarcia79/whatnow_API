@@ -70,7 +70,7 @@ con.getConnection(function(err, con) {
             "Phone" : result[0].USER_phone,
           }
         };
-      console.log(spot);
+      console.log("spot: " + args.SpotId.value);
       con.release();
       res.setHeader('Content-Type', 'application/json');
       res.end(JSON.stringify(spot));
@@ -158,7 +158,7 @@ exports.getSpotList = function(args, res, next) {
       
       var json = { "SPOTs" : spotList };
       
-      console.log(json);
+      console.log("spot list");
       con.release();
       res.setHeader('Content-Type', 'application/json');
       res.end(JSON.stringify(json));

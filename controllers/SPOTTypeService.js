@@ -38,7 +38,7 @@ exports.getSpottype = function(args, res, next) {
         "Type" : result[0].type,
         "Description" : result[0].description
         };
-        console.log(typeSpot);
+        console.log("type Spot: " + args.spotTypeId.value);
       con.release();
       res.setHeader('Content-Type', 'application/json');
       res.end(JSON.stringify(typeSpot));
@@ -83,7 +83,7 @@ exports.getSpottypeList = function(args, res, next) {
       }  
       
       var json = { "SPOTsTypes" : typeSpotList };
-      console.log(json);
+      console.log("type spot list");
       con.release();
       res.setHeader('Content-Type', 'application/json');
       res.end(JSON.stringify(json));
