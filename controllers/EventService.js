@@ -7,7 +7,9 @@ var con = mysql.createPool({
   port : 3306,
   user: "whatnow",
   password: "Just4Strong!",
-  database: "mydb"
+  database: "mydb",
+  timezone: 'UTC',
+  dateStrings: 'DATETIME'
 });
 
 exports.getEvent = function(args, res, next) {
@@ -46,8 +48,7 @@ exports.getEvent = function(args, res, next) {
         con.release();
         res.end();
         console.log(err);
-      }    
-
+      }
       if(Object.keys(result).length > 0) {
         var sql_Atribute = "SELECT * "
                          + "FROM ATRIBUTE "
@@ -268,7 +269,7 @@ exports.postEventCreate = function(args, res, next) {
               event[3] + "'," +
               event[4] + "," +
               event[5] + ");";       
-
+console.log(sql);
     con.query(sql, function (err, result, fields) {
       if (err) {
         con.release();
@@ -336,7 +337,7 @@ exports.postEventEdit = function(args, res, next) {
              "SPOT_id = " + event[5] + ", " +
              "TYPE_EVENT_id = " + event[6] + " " +
              "where EVENT.id = " + event[0];
-
+             console.log(sql);
    con.query(sql, function (err, result, fields) {
      if (err) {
        con.release();
