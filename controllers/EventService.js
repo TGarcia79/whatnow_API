@@ -268,8 +268,7 @@ exports.postEventCreate = function(args, res, next) {
               event[2] + "','" +
               event[3] + "'," +
               event[4] + "," +
-              event[5] + ");";       
-console.log(sql);
+              event[5] + ");";
     con.query(sql, function (err, result, fields) {
       if (err) {
         con.release();
@@ -337,7 +336,6 @@ exports.postEventEdit = function(args, res, next) {
              "SPOT_id = " + event[5] + ", " +
              "TYPE_EVENT_id = " + event[6] + " " +
              "where EVENT.id = " + event[0];
-             console.log(sql);
    con.query(sql, function (err, result, fields) {
      if (err) {
        con.release();
@@ -345,7 +343,7 @@ exports.postEventEdit = function(args, res, next) {
        console.log(err);
      }
    });
-   console.log("Update Event: "+  event[0]);
+   console.log("Update Event: " + event[0]);
    con.release();
    res.end();
  }); 
